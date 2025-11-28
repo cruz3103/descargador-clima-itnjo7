@@ -1,0 +1,4 @@
+clima-virtual/
+__pycache__/
+*.pyc
+.vscode/
