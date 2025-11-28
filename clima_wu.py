@@ -81,7 +81,13 @@ chrome_path = os.environ.get("CHROME_PATH")
 if chrome_path:
     chrome_options.binary_location = chrome_path
 
-service = Service(ChromeDriverManager().install())
+# Si estamos en GitHub Actions, usamos el chromedriver ya instalado en el PATH.
+# Si estamos localmente, usamos webdriver_manager para descargarlo.
+if os.environ.get("GITHUB_ACTIONS") == "true":
+    service = Service()  # usa 'chromedriver' del PATH (instalado por setup-chrome)
+else:
+    service = Service(ChromeDriverManager().install())
+
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 print(f"🌐 Abriendo: {url}")
